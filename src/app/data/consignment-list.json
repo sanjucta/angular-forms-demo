@@ -1,0 +1,27 @@
+[
+    {
+      "id" : 1,
+      "sender" : "Good Bush Tea Company",
+      "consignmentNo": "C-123256",
+      "receivedDate":"05/09/2017",
+      "items":[
+        {"teaType":"Oolong","noOfContainers":25,"weightPerContainerinKgs":5,"totalItemWeight":125},
+        {"teaType":"Assam Black","noOfContainers":50,"weightPerContainerinKgs":3,"totalItemWeight":150}],
+      "transportMode":"rail",
+      "vehicleReg":""
+    
+    },
+    {
+      "id" : 2,
+      "sender" : "Happy Valley Tea Company",
+      "consignmentNo": "C-124436",
+      "receivedDate":"05/10/2017",
+      "items":[
+        {"teaType":"Oolong","noOfContainers":25,"weightPerContainerinKgs":5,"totalItemWeight":125},
+        {"teaType":"Darjeeling White","noOfContainers":45,"weightPerContainerinKgs":3,"totalItemWeight":135},
+        {"teaType":"Orange Pekoe","noOfContainers":21,"weightPerContainerinKgs":3,"totalItemWeight":63}],
+      "transportMode":"road",
+      "vehicleReg":"WB02-11254"
+    }
+    
+  ]

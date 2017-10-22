@@ -1,31 +1,33 @@
-# AngularDemo
+# Project Title
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.28.3.
+This is a small project that demonstrates how to create Reactive Forms using Angular(>=2.0). This project uses Angular 4 , but the Reactive Forms techniques demonstrated here will work just as well with Angular 2.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Getting Started
+These instructions will get you a copy of the project up and running on your local machine
 
-## Code scaffolding
+### Prerequisites
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+You need to have the follwowing installed on your machine
 
-## Build
+* Node 6.9.0 or higher, together with NPM 3 or higher.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-## Running unit tests
+### Installing
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+If you do not have angular-cli installed, please install it globally using the command :
 
-## Running end-to-end tests
+```
+npm install -g @angular/cli
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+```
+Clone this repository or download the code. In your command shell navigate to the directory where you have cloned the repository.In case you have downloaded a zip archive, navigate to the folder where you have unzipped the archive. This directory will contain the package.json file. In the command shell type `npm install` to install the dependencies. You can then type `npm start` to start a server in the development mode. You can then access the application in your browser by typing in `http://localhost:4200` 
 
-## Deploying to GitHub Pages
 
-Run `ng github-pages:deploy` to deploy to GitHub Pages.
+## Authors
 
-## Further help
+* **Sanjucta Ghose** - https://github.com/sanjucta
 
-To get more help on the `angular-cli` use `ng help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+

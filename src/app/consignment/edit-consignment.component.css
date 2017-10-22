@@ -1,0 +1,13 @@
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+
+.error{
+    color:red;
+    font-size : 11px;
+    }
+
+.item-error{
+    border : 1px solid red;
+    padding : 10px;
+}

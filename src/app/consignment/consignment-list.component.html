@@ -1,0 +1,25 @@
+
+<main >
+      <h2>Consignment List</h2>
+        <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>From</th>
+              <th>Received Date</th>
+              <th>Weight(in kgs)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let consignment of consignments">
+              <td><a routerLink='/consignment-edit/{{consignment.id}}'>{{consignment.consignmentNo}}</a></td>
+              <td>{{consignment.sender}}</td>
+              <td>{{consignment.receivedDate|date:'dd-MMM-yyyy'}}</td>
+              <td>{{computeTotalWeight(consignment)}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+</main>
+      

@@ -1,0 +1,102 @@
+<div class="col-md-10 offset-md-1">
+    <h3>Add Consignment </h3>
+      
+    <form [formGroup]="consignmentForm" (ngSubmit)="onSubmit()">
+            <input type="hidden"  formControlName="id">  
+    <div class="row mt-4">
+        
+        <div class="col-sm-6 pb-3">
+            <label for="consignmentNo">Consignment No</label>
+            <input type="text" class="form-control" id="consignmentNo" formControlName="consignmentNo">
+            <span [ngClass]="{'error':shouldShowError('consignmentNo')}">{{showError('consignmentNo')}}</span>
+        </div>
+        <div class="col-sm-6 pb-3">
+            <label for="receivedDate">Date Received</label>
+            <input type="text" class="form-control" id="receivedDate" placeholder="dd/mm/yyyy" formControlName="receivedDate">
+            <span [ngClass]="{'error':shouldShowError('receivedDate')}">{{showError('receivedDate')}}</span>
+        </div>
+    
+        <div class="col-sm-12 pb-3">
+            <label for="sender">Sender</label>
+            <input type="text" class="form-control" id="sender" formControlName="sender">
+            <span [ngClass]="{'error':shouldShowError('sender')}">{{showError('sender')}}</span>            
+        </div>
+        <div class="col-md-6 pb-3">
+            <label for="transportMode1">Transportion Mode</label>
+            <div class="form-group">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label pr-5 pt-2">
+                        <input class="form-check-input " type="radio"  id="transportMode1" value="rail" formControlName="transportMode"> Rail
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label pt-2">
+                        <input class="form-check-input" type="radio" id="transportMode2" value="road" formControlName="transportMode"> Road
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 pb-3">
+            <label for="vehicleReg">Vehicle Registration</label>
+            <input type="text" class="form-control" id="vehicleReg" formControlName="vehicleReg">
+            <small class="text-muted">
+                *Required if transportion by road
+            </small>
+        </div>
+    </div>
+
+    <div class="card card-outline-secondary col-md-12">
+        <div class="card-block">
+            <div class="form-group row">
+                <label class="col-md-10">Items</label>  
+                <span class="col-md-2"><button (click)="addItem()" style="cursor: default" type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></button></span>
+            </div>
+            <hr>
+                
+                <div class="form-group row">
+                    <label class="col-md-3">Tea Type</label>
+                    <label class="col-md-2">No. Of Containers</label>
+                    <label class="col-md-2">Wt per Container(kgs)</label>
+                    <label class="col-md-3">Total Weight(kgs)</label>
+                    <label class="col-md-2"></label>
+                </div>
+                <div  formArrayName="items" *ngFor="let item of consignmentForm.get('items').controls; let i = index;">
+                    
+                    <div class="form-group row " [formGroupName]=i [ngClass] = "{'item-error':itemsInvalidMsg.length>0}" >    
+                            <div class="col-md-3">
+                                <select class="form-control" name="itemName" size="0" formControlName="teaType" >
+                                    <option [value]="teaType" *ngFor="let teaType of teaTypes">{{teaType}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" autocomplete="off" formControlName="noOfContainers" >
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" autocomplete="off"  formControlName="weightPerContainerinKgs">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" autocomplete="off"  formControlName="totalItemWeight" >
+                            </div>
+                            <div class="col-md-2">
+                                <button (click)="deleteItem(i)" style="cursor: default" type="button" class="btn btn-sm btn-primary" [disabled]="consignmentForm.get('items').controls.length <= 1"><i class="fa fa-trash"></i></button>
+                            </div>
+                            
+                    </div>
+                </div>
+                <div [hidden]="!itemsInvalidMsg">
+                    <ul >
+                        <li *ngFor="let msg of itemsInvalidMsg" class="error">{{msg}}</li>
+                    </ul>
+                </div>
+        </div>
+                
+    </div>
+        <div class="col-md-10 offset-md-1 ">
+        <div class="row align-items-center justify-content-center mt-4">
+            <button  type="button" class="btn btn-outline-primary mr-4" (click)="onCancel()">Cancel</button>
+            <button type="submit" class="btn btn-outline-primary" [disabled]="consignmentForm.invalid">Save Changes</button>
+            
+        </div>
+    </div>
+</form>  
+
