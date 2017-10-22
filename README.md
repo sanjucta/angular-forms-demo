@@ -3,7 +3,7 @@
 This is a small project that demonstrates how to create Reactive Forms using Angular(>=2.0). This project uses Angular 4, but the Reactive Forms techniques demonstrated here will work just as well with Angular 2.
 
 ## Getting Started
-These instructions will get you a copy of the project up and running on your local machine
+These instructions will help you get a copy of the project up and running on your local machine
 
 ### Prerequisites
 
