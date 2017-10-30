@@ -15,7 +15,6 @@
             <input type="text" class="form-control" id="receivedDate" placeholder="dd/mm/yyyy" formControlName="receivedDate">
             <span [ngClass]="{'error':shouldShowError('receivedDate')}">{{showError('receivedDate')}}</span>
         </div>
-    
         <div class="col-sm-12 pb-3">
             <label for="sender">Sender</label>
             <input type="text" class="form-control" id="sender" formControlName="sender">
@@ -60,9 +59,8 @@
                     <label class="col-md-3">Total Weight(kgs)</label>
                     <label class="col-md-2"></label>
                 </div>
-                <div  formArrayName="items" *ngFor="let item of consignmentForm.get('items').controls; let i = index;">
-                    
-                    <div class="form-group row " [formGroupName]=i [ngClass] = "{'item-error':itemsInvalidMsg.length>0}" >    
+                <div formArrayName="items" *ngFor="let item of consignmentForm.get('items').controls; let i = index;">
+                        <div class="form-group row"  [formGroupName]="i" [ngClass] = "{'item-error':itemsInvalidMsg[i]}" >        
                             <div class="col-md-3">
                                 <select class="form-control" name="itemName" size="0" formControlName="teaType" >
                                     <option [value]="teaType" *ngFor="let teaType of teaTypes">{{teaType}}</option>
@@ -80,15 +78,14 @@
                             <div class="col-md-2">
                                 <button (click)="deleteItem(i)" style="cursor: default" type="button" class="btn btn-sm btn-primary" [disabled]="consignmentForm.get('items').controls.length <= 1"><i class="fa fa-trash"></i></button>
                             </div>
-                            
-                    </div>
+                        </div>
+                        <div [hidden]="!itemsInvalidMsg[i]">
+                            <ul >
+                                <li *ngFor="let msg of itemsInvalidMsg[i]" class="error">{{msg}}</li>
+                            </ul>
+                        </div>    
                 </div>
-                <div [hidden]="!itemsInvalidMsg">
-                    <ul >
-                        <li *ngFor="let msg of itemsInvalidMsg" class="error">{{msg}}</li>
-                    </ul>
-                </div>
-        </div>
+            </div>
                 
     </div>
         <div class="col-md-10 offset-md-1 ">

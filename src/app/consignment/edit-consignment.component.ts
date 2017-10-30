@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { validDate,validateItemList } from './validation-helper';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConsignmentService } from '../services/consignment.service';
-import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   templateUrl: './edit-consignment.component.html',
@@ -18,7 +18,7 @@ export class EditConsignmentComponent implements OnInit {
 
     teaTypes = ['Oolong','Assam Black','Orange Pekoe','Darjeeling Black','Darjeeling White'];
 
-    itemsInvalidMsg = [];
+    itemsInvalidMsg = {};
 
     controlErrorLabels = {
         consignmentNo : 'Consignment Number',
@@ -43,6 +43,7 @@ export class EditConsignmentComponent implements OnInit {
         });
     
         this.addVehicleRegValidations();
+        this.addItemListValidations();      
   }
   
   addVehicleRegValidations()
@@ -58,7 +59,13 @@ export class EditConsignmentComponent implements OnInit {
       this.consignmentForm.get("vehicleReg").markAsTouched();
       this.consignmentForm.get("vehicleReg").updateValueAndValidity();
      });
-      this.consignmentForm.get('items').setValidators([validateItemList]);
+      
+  }
+
+  addItemListValidations()
+  {
+    this.consignmentForm.get('items').setValidators([validateItemList]);
+    this.consignmentForm.get('items').valueChanges.debounceTime(2000).subscribe((val)=>{this.updateValidationDisplayForItems()});
   }
 
   ngOnInit() 
@@ -69,8 +76,8 @@ export class EditConsignmentComponent implements OnInit {
         if( params["id"] !=null)
         {
           this.consignmentService.getConsignment(params["id"]).subscribe(consignment=>{
-          this.updateForm(consignment);
-        })          
+            this.updateForm(consignment);
+          })          
         }
 
       } )                
@@ -90,6 +97,7 @@ export class EditConsignmentComponent implements OnInit {
      this.consignmentForm.removeControl('items');
      this.consignmentForm.setControl('items',this.fb.array(itemCtrls));
      this.consignmentForm.setValue(consignment);
+     this.addItemListValidations();
   }
 
   shouldShowError(formControlName:string)
@@ -121,7 +129,7 @@ export class EditConsignmentComponent implements OnInit {
     {
       let errorMsgs = {
             required : `${label} is required`,
-            validDate : `Please enter a valid date`
+            invalidDate : `Please enter a valid date`
         }
       return errorMsgs[key];  
     }
@@ -137,7 +145,7 @@ export class EditConsignmentComponent implements OnInit {
        
     itemGrp.get('noOfContainers').valueChanges.subscribe(this.updateTotalWeight.bind(this,itemGrp));
     itemGrp.get('weightPerContainerinKgs').valueChanges.subscribe(this.updateTotalWeight.bind(this,itemGrp));
-    itemGrp.statusChanges.subscribe(val=>{ this.itemsInvalidMsg = []});
+    itemGrp.statusChanges.subscribe(val=>{ this.itemsInvalidMsg = {}});
 
     return itemGrp;
   }
@@ -160,7 +168,7 @@ export class EditConsignmentComponent implements OnInit {
   addItem(){
 
     this.updateValidationDisplayForItems();
-    if(this.itemsInvalidMsg.length == 0)
+    if (Object.keys(this.itemsInvalidMsg).length === 0)
     {
       let itemArr : FormArray = this.consignmentForm.get("items") as FormArray; 
       itemArr.push(this.createItem());
@@ -170,10 +178,16 @@ export class EditConsignmentComponent implements OnInit {
 
   updateValidationDisplayForItems()
   {
-     this.itemsInvalidMsg = [];
+     this.itemsInvalidMsg = {};
      if(this.consignmentForm.get('items').hasError('errorMsgs'))
      {
-      this.consignmentForm.get('items').errors["errorMsgs"].forEach(msg=>{this.itemsInvalidMsg.push(msg)});
+          
+        const msgMap = this.consignmentForm.get('items').errors["errorMsgs"] ;
+     
+        for(const key in msgMap)
+        {
+          this.itemsInvalidMsg[key]= msgMap[key];
+        }
      }
  
   }
